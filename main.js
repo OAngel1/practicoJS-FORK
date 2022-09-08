@@ -2,61 +2,65 @@ const profile = document.querySelector('#id_email');
 const desktopMenu = document.querySelector('.desktop-menu');
 const iconMenu = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
-const navShopCar = document.querySelector('.navbar-shopping-cart');
-const productDetails =document.querySelector('.product-detail');
+const navShopCar = document.querySelector('.navbar-shopping-cart');//Boton shopCart
+const aside =document.querySelector('aside');
 const cardsContainer = document.querySelector('.cards-container');
-const closeShowProduct = document.querySelector('.product-detail-close');
+const closeProductDetails = document.querySelector('.product-detail-close');
 
-const cartList = document.querySelector('.cart-list');
-const showProduct = document.querySelector('.show-product');
+const cartList = document.querySelector('#cart-list');
+const productDetails = document.querySelector('#show-product');
 
 profile.addEventListener('click',toggleDesktopMenu);
 iconMenu.addEventListener('click',toggleMobileMenu);
-navShopCar.addEventListener('click',toggleProductCartList);
-closeShowProduct.addEventListener('click',toCloseShow);
+navShopCar.addEventListener('click',toggleCartList);
+closeProductDetails.addEventListener('click',toCloseProductDetails);
+//    productInfoDiv.addEventListener('click',toggleProductDetails); ciclo
 
-function toCloseShow(){
+function toCloseProductDetails(){
+    aside.classList.add('inactive');
     productDetails.classList.add('inactive');
-    showProduct.classList.add('inactive');
+    cartList.classList.add('inactive');
 }
  
-function toggleProductCartList(){
-    const statusDetails = productDetails.classList.contains('inactive');
-    const statusShowProduct = !showProduct.classList.contains('inactive');
+function toggleCartList(){
+    const statusAside = aside.classList.contains('inactive');
+    const statusProductDetails = !productDetails.classList.contains('inactive');
 
-    if(statusDetails){
-        productDetails.classList.toggle('inactive');
-    }else if(statusShowProduct){
-        showProduct.classList.add('inactive');
+    if(statusAside){
+        aside.classList.remove('inactive');
+    }else if(statusProductDetails){
+        productDetails.classList.add('inactive');
     }else{
-        productDetails.classList.toggle('inactive');
+        aside.classList.add('inactive');
+        cartList.classList.add('inactive');
     } 
-    cartList.classList.toggle('inactive');
+    cartList.classList.remove('inactive');
     desktopMenu.classList.add('inactive');
     mobileMenu.classList.add('inactive');
 }
 
 function toggleDesktopMenu(){
     desktopMenu.classList.toggle('inactive');
-    productDetails.classList.add('inactive');
+    toCloseProductDetails();
 }
 
 function toggleMobileMenu(){
     mobileMenu.classList.toggle('inactive');
-    productDetails.classList.add('inactive');
+    toCloseProductDetails();
 }
-function toggleShowProduct(){
-    const statusDetails = productDetails.classList.contains('inactive');
+function toggleProductDetails(){
+    const statusAside = aside.classList.contains('inactive');
     const statusCartlist = !cartList.classList.contains('inactive');
 
-    if(statusDetails){
-        productDetails.classList.toggle('inactive');
+    if(statusAside){
+        aside.classList.remove('inactive');
     }else if(statusCartlist){
         cartList.classList.add('inactive');
     }else{
-        productDetails.classList.toggle('inactive');
+        //aside.classList.add('inactive');
+        //productDetails.classList.add('inactive');
     } 
-    showProduct.classList.toggle('inactive');
+    productDetails.classList.remove('inactive');
     desktopMenu.classList.add('inactive');
     mobileMenu.classList.add('inactive');
 }
@@ -88,7 +92,7 @@ for (product of productList){
     productInfo.classList.add('product-info');
 
     const productInfoDiv = document.createElement('div');
-    productInfoDiv.addEventListener('click',toggleShowProduct);
+    productInfoDiv.addEventListener('click',toggleProductDetails);
 
     const productPrice = document.createElement('p');
     productPrice.innerText = "$ "+product.price;
